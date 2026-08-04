@@ -92,3 +92,25 @@ test.only("different advance locators", async({page})=>{
     await page.getByRole("button",{name:'Submit'}).click();
     
 })
+
+
+
+// wait and timeout strategy > explicitly wait at assertion level or action level. in playwright we have 3 ways to intialise or mention timeout
+
+// a. assertion timeout
+// 1. Statement level >> await expect(page.locator(".fa-home")).toBeVisible({timeout : 100000});   >> step level
+// 2. Global level >> in playwright.spec.js  we need to update timout in expect block >> this is called global timeout
+// 3. test case level >>   const  updateExpect = expect.configure{{timeout : 100000}}
+// then use   await updateExpect(page.locator(".fa-home")).toBeVisible(); this is called test case level
+
+// b. action timeout >  all action method are relying on total test timeout but if any actions are taking
+// time in that case we can add timeout for action as well.
+// 1. Global level >> in playwrigh.spec.js  we have to add actionTimeout and  navigationTimeout in  use block > this is timeout will applicable for all action methods
+// 2. Test case level >> page.setdefaultTimeout(10000);
+// 3. step level >>  it is simmilar to assertion timeout in statement we have add {timeout : value} in action method
+
+// priority  step level > test level > global level timeouts in assetion and action case
+
+
+
+
