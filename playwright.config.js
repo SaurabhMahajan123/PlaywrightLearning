@@ -8,10 +8,16 @@ export default defineConfig({
   expect:{
     timeout : 50 * 1000
   },
+  reporter: [
+    ['html'],
+    ['list']
+  ],
 
   use :{
     browserName : 'chromium',
-    headless : false
+    headless : false,
+    screenshot : 'on',
+    trace : 'retain-on-failure'
   }
 
 });

@@ -1,5 +1,15 @@
 import { test, expect } from "@playwright/test"
 
+
+// to run particular test file
+// command  :-    npx playwright test  filename.spec.js
+
+// to run test in file in debug mode
+// command  :-    npx playwright test  filename.spec.js --debug 
+
+
+
+
 // open website and fill the form and click on login button and check the error message
 test("open google.com", async({page})=>{
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
@@ -83,7 +93,7 @@ test("child window handling", async({browser})=>{
 
 // different advance locators
 
-test.only("different advance locators", async({page})=>{
+test("different advance locators", async({page})=>{
     await page.goto("https://rahulshettyacademy.com/angularpractice/");
     await page.getByLabel('Check me out if you Love IceCreams!').click();
     await page.getByLabel('Employed').click();
@@ -111,6 +121,40 @@ test.only("different advance locators", async({page})=>{
 
 // priority  step level > test level > global level timeouts in assetion and action case
 
+
+// use filter
+
+test('@Webst Client App login', async ({ page }) => {
+   //js file- Login js, DashboardPage
+   const email = "anshika@gmail.com";
+   const productName = 'ZARA COAT 3';
+   const products = page.locator(".card-body");
+   await page.goto("https://rahulshettyacademy.com/client");
+   await page.getByPlaceholder("email@example.com").fill(email);
+   await page.getByPlaceholder("enter your passsword").fill("Iamking@000");
+   await page.getByRole('button',{name:"Login"}).click();
+   await page.waitForLoadState('networkidle');
+   await page.locator(".card-body b").first().waitFor();
+   
+   // filter excatly work like for loop and find exact  text 
+   await page.locator(".card-body").filter({hasText:"ZARA COAT 3"})
+   .getByRole("button",{name:"Add to Cart"}).click();
+ 
+   await page.getByRole("listitem").getByRole('button',{name:"Cart"}).click();
+ 
+   //await page.pause();
+   await page.locator("div li").first().waitFor();
+   await expect(page.getByText("ZARA COAT 3")).toBeVisible();
+ 
+   await page.getByRole("button",{name :"Checkout"}).click();
+ 
+   await page.getByPlaceholder("Select Country").pressSequentially("ind");
+ 
+   await page.getByRole("button",{name :"India"}).nth(1).click();
+   await page.getByText("PLACE ORDER").click();
+ 
+   await expect(page.getByText("Thankyou for the order.")).toBeVisible();
+})
 
 
 
