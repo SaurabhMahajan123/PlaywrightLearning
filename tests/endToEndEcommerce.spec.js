@@ -61,13 +61,13 @@ test("TC_verify checkout funtionality", async({page})=>{
             await page.locator(".card-body b").last().waitFor();
             const ct = await allProduct.count();
 
-                   for( let i=0 ; i < ct; ++i){
-            await console.log(i + ":" + await allProduct.nth(i).locator("b").textContent())
-            if(await allProduct.nth(i).locator("b").textContent() === product){
-            await allProduct.nth(i).getByRole('button', { name: ' Add To Cart' }).click();
-            break;
+            for( let i=0 ; i < ct; ++i){
+                await console.log(i + ":" + await allProduct.nth(i).locator("b").textContent())
+                    if(await allProduct.nth(i).locator("b").textContent() === product){
+                    await allProduct.nth(i).getByRole('button', { name: ' Add To Cart' }).click();
+                    break;
+                    }
             }
-        }
     await page.locator('i.fa-shopping-cart').first().click(); 
     await page.locator('div li').first().waitFor();
     await page.getByRole('button',{name : 'Checkout'}).click();
